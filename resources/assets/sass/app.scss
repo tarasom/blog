@@ -1,14 +1,46 @@
-
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
-
 // Variables
 @import "variables";
-
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+@import "~font-awesome/scss/font-awesome.scss";
 
 .navbar-laravel {
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+}
+
+.add-resource {
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  border: none;
+  bottom: 24px;
+  cursor: pointer;
+  height: 56px;
+  position: fixed;
+  -webkit-transition-duration: 0.25s;
+  -moz-transition-duration: 0.25s;
+  -o-transition-duration: 0.25s;
+  background-color: red;
+  text-align: center;
+  font-size: 40px;
+  transition-duration: 0.25s;
+  -webkit-transition-property: background-color, -webkit-box-shadow;
+  right: 24px;
+  outline: none;
+  transition-property: background-color, box-shadow;
+  width: 56px;
+  z-index: 2;
+}
+
+.add-resource-plus {
+  line-height: 56px;
+  color: white;
+}
+
+a.add-resource-plus:hover {
+  text-decoration: none;
+  color: white;
 }
