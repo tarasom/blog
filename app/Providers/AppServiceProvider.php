@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Entities\Category;
 use App\Entities\Post;
+use app\Observers\CategoryObserver;
 use app\Observers\PostObserver;
 use App\Services\Contracts\PostImageService as PostImageServiceInterface;
 use App\Services\PostImageService;
@@ -18,6 +20,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         Post::observe(PostObserver::class);
+        Category::observe(CategoryObserver::class);
     }
 
     /**

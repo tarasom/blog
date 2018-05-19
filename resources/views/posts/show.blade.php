@@ -3,7 +3,7 @@
 @section('content')
     <div class="container">
         <div class="container">
-            <div class="col-md-10">
+            <div class="col-md-12">
                 <h1>
                     {{ $post->getName() }}
                 </h1>
@@ -27,6 +27,18 @@
                             {{ __('posts.pages.show.buttons.destroy') }}
                         </a>
                     @endcan
+                </div>
+
+                <span>
+                    {{ __('categories.text.categories') . ': '}}
+                </span>
+                <div class="row">
+                    @foreach($post->categories as $category)
+                        <a class="badge" href="{{ route('categories.show', $category) }}">
+                            {{ $category->getName() }}
+                        </a>
+                        </span>
+                    @endforeach
                 </div>
             </div>
         </div>
