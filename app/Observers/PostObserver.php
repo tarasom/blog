@@ -33,6 +33,8 @@ class PostObserver
         if (null !== $fileName) {
             $this->deleteObsoleteImage($fileName);
         }
+
+        $post->categories()->sync([]);
     }
 
     /**

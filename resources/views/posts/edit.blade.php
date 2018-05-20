@@ -10,7 +10,6 @@
             @method('PUT')
 
             <fieldset>
-
                 <!-- Form Name -->
                 <legend>
                     {{ __('posts.pages.edit.title') }}
@@ -71,6 +70,25 @@
                             </span>
                         @endif
                     </div>
+                </div>
+
+                <!-- Categories-->
+
+                <h3>
+                    {{ __('categories.text.categories') }}
+                </h3>
+                <div class="row">
+                    @foreach($categories as $categoryId => $categoryName)
+                        <div class="form-check float-left">
+                            <label>
+                                <input type="checkbox" name="categories[{{$categoryId}}]"
+                                        {{ $post->categories->contains('id', $categoryId) ? 'checked' : '' }}>
+                                <span class="label-text">
+                                    {{ $categoryName }}
+                                </span>
+                            </label>
+                        </div>
+                    @endforeach
                 </div>
 
                 <!-- Submit button -->

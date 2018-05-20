@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 use Illuminate\Validation\Rules\Unique;
 
-class PostRequest extends FormRequest
+class CategoryRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -27,9 +27,8 @@ class PostRequest extends FormRequest
     public function rules()
     {
         return [
-            'name'    => 'required|string|min:3|max:255|' . $this->getUniqueNameRule(),
-            'content' => 'required|string',
-            'file'    => 'nullable|file|image|max:2048',
+            'name'        => 'required|string|min:3|max:255|' . $this->getUniqueNameRule(),
+            'description' => 'required|string',
         ];
     }
 
@@ -39,9 +38,8 @@ class PostRequest extends FormRequest
     public function attributes()
     {
         return [
-            'name'    => trans('posts.fields.name'),
-            'content' => trans('posts.fields.content'),
-            'file'    => trans('posts.fields.file'),
+            'name'        => trans('categories.fields.name'),
+            'description' => trans('categories.fields.description'),
         ];
     }
 
@@ -50,10 +48,10 @@ class PostRequest extends FormRequest
      */
     private function getUniqueNameRule(): Unique
     {
-        $rule = Rule::unique('posts');
+        $rule = Rule::unique('categories');
 
         if (Request::METHOD_PUT === $this->getMethod()) {
-            $rule->ignore($this->route('post'));
+            $rule->ignore($this->route('category'));
         }
 
         return $rule;

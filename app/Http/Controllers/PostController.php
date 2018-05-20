@@ -4,9 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Entities\Post;
+use App\Repositories\Contracts\CategoryRepository;
 use App\Repositories\Contracts\PostRepository;
 use App\Services\Contracts\PostImageService;
-use Intervention\Image\Facades\Image;
+use Illuminate\Database\Eloquent\Builder;
 
 class PostController extends Controller
 {
@@ -20,10 +21,20 @@ class PostController extends Controller
      */
     public $postImageService;
 
-    public function __construct(PostRepository $postRepository, PostImageService $postImageService)
+    /**
+     * @var CategoryRepository
+     */
+    public $categoryRepository;
+
+    public function __construct(
+        PostRepository $postRepository,
+        PostImageService $postImageService,
+        CategoryRepository $categoryRepository
+    )
     {
-        $this->postRepository   = $postRepository;
-        $this->postImageService = $postImageService;
+        $this->postRepository     = $postRepository;
+        $this->postImageService   = $postImageService;
+        $this->categoryRepository = $categoryRepository;
     }
 
     /**
@@ -33,9 +44,10 @@ class PostController extends Controller
      */
     public function index()
     {
-        $posts = $this->postRepository->scopeQuery(function (Post $query) {
+        $posts = $this->postRepository->scopeQuery(function (Builder $query) {
             return $query->latest();
-        })->paginate();
+        })->with('categories')
+            ->paginate();
 
         return view('posts.index')->withPosts($posts);
     }
@@ -101,7 +113,12 @@ class PostController extends Controller
     {
         $this->authorize('update', $post);
 
-        return view('posts.edit')->withPost($post);
+        $categories = $this->categoryRepository->pluck('name', 'id');
+
+        return view('posts.edit')->with([
+            'post'       => $post,
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -127,6 +144,10 @@ class PostController extends Controller
         ]);
 
         $updatedPost = $this->postRepository->update($attributes, $post->getKey());
+
+        $categories = array_keys($request->get('categories', []));
+
+        $updatedPost->categories()->sync($categories);
 
         return redirect()->route('posts.show', $updatedPost)->withMessage('Ok');
     }

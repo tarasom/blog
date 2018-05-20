@@ -34,8 +34,19 @@
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <!-- Left Side Of Navbar -->
-                <ul class="navbar-nav mr-auto">
-
+                <ul class="navbar-nav mr-auto ">
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::currentRouteName() === 'posts.index' ? 'active' : '' }}"
+                           href="{{ route('posts.index') }}">
+                            {{ __('posts.text.posts') }}
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::currentRouteName() === 'categories.index' ? 'active' : '' }}"
+                           href="{{ route('categories.index') }}">
+                            {{ __('categories.text.categories') }}
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

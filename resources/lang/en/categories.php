@@ -2,22 +2,21 @@
 
 return [
     'fields' => [
-        'name'    => 'Name',
-        'file'    => 'File',
-        'content' => 'Content',
+        'name'        => 'Name',
+        'description' => 'Description',
     ],
     'text'   => [
-        'posts' => 'Posts',
+        'categories' => 'Categories',
     ],
     'pages'  => [
         'create' => [
-            'title'   => 'Create Page',
+            'title'   => 'Create Category',
             'buttons' => [
                 'create' => 'Create',
             ],
         ],
         'edit'   => [
-            'title'   => 'Edit Post',
+            'title'   => 'Edit Category',
             'buttons' => [
                 'update' => 'Update',
             ],
@@ -28,9 +27,8 @@ return [
                 'destroy' => 'Delete',
             ],
         ],
-        'index' => [
+        'index'  => [
             'buttons' => [
-                'read_more'    => 'Read more ...',
             ],
         ],
     ]
