@@ -9,6 +9,7 @@ use app\Observers\PostObserver;
 use App\Services\Contracts\PostImageService as PostImageServiceInterface;
 use App\Services\PostImageService;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Database\Eloquent\Relations\Relation;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -19,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Relation::morphMap([
+            'post'     => Post::class,
+            'category' => Category::class,
+        ]);
+
         Post::observe(PostObserver::class);
         Category::observe(CategoryObserver::class);
     }

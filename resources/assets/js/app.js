@@ -1,4 +1,3 @@
-
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -7,16 +6,36 @@
 
 require('./bootstrap');
 
-window.Vue = require('vue');
+var csrf = $('meta[name="csrf-token"]').attr('content');
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+$.ajaxSetup({
+    dataType: 'json',
+    headers: {
+        'X-CSRF-TOKEN': csrf
+    },
+    error: function (xhr) {
+        if (422 == xhr.status) {
+            handleValidationErrors(xhr);
+        } else {
+            var message = 'undefined' === typeof xhr.responseJSON.message
+                ? 'Something went wrong'
+                : xhr.responseJSON.message;
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+            alert(message);
+        }
+    }
+})
 
-const app = new Vue({
-    el: '#app'
-});
+
+function handleValidationErrors(response) {
+    $('.has-error').removeClass('has-error');
+
+    for (var key in response.responseJSON.errors) {
+        var keyParts = key.split('.');
+        var normalizedKey = keyParts.shift() + keyParts.map(function (item) {
+            return '[' + item + ']';
+        }).join('');
+
+        $('*[name="' + normalizedKey + '"]').parents('div.form-group').addClass('has-error');
+    }
+}

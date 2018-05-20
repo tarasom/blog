@@ -47,6 +47,15 @@ class Category extends Model implements Transformable
      */
     public function posts(): BelongsToMany
     {
-        return $this->belongsToMany(Category::class, 'post_categories');
+        return $this->belongsToMany(Category::class, 'post_categories')
+            ->withPivot('post_id');
+    }
+
+    /**
+     * Get all of the post's comments.
+     */
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
     }
 }
