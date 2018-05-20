@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Repositories\CategoryRepositoryEloquent;
+use App\Repositories\CommentRepositoryEloquent;
 use App\Repositories\Contracts\CategoryRepository;
+use App\Repositories\Contracts\CommentRepository;
 use App\Repositories\Contracts\PostRepository;
 use App\Repositories\PostRepositoryEloquent;
 use Illuminate\Support\ServiceProvider;
@@ -29,5 +31,6 @@ class RepositoryServiceProvider extends ServiceProvider
     {
         $this->app->bind(PostRepository::class, PostRepositoryEloquent::class);
         $this->app->bind(CategoryRepository::class, CategoryRepositoryEloquent::class);
+        $this->app->bind(CommentRepository::class, CommentRepositoryEloquent::class);
     }
 }

@@ -15,7 +15,7 @@
                         {{ $category->getName() }}
                     </a>
                     <span class="badge badge-primary badge-pill">
-                        0
+                        {{ $category->posts_count }}
                     </span>
                 </li>
             @endforeach

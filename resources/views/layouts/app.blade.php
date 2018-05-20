@@ -11,7 +11,9 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
-    <script src="{{ secure_asset('js/app.js') }}" defer></script>
+    <script src="{{ secure_asset("/js/manifest.js") }}"></script>
+    <script src="{{ secure_asset("/js/vendor.js") }}"></script>
+    <script src="{{ mix('js/app.js') }}"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -85,5 +87,6 @@
         @yield('content')
     </main>
 </div>
+@yield('scripts')
 </body>
 </html>

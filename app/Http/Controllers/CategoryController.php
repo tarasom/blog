@@ -5,7 +5,8 @@ namespace App\Http\Controllers;
 use App\Entities\Category;
 use App\Http\Requests\CategoryRequest;
 use App\Repositories\Contracts\CategoryRepository;
-use Illuminate\Http\Request;
+use App\Repositories\Contracts\PostRepository;
+use Illuminate\Support\Facades\DB;
 
 class CategoryController extends Controller
 {
@@ -26,7 +27,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = $this->categoryRepository->all();
+        $categories = $this->categoryRepository->withCount('posts')
+            ->all();
 
         return view('categories.index')->withCategories($categories);
     }
@@ -68,7 +70,17 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        return view('categories.show')->withCategory($category);
+        $repoCategory = $this->categoryRepository->with(['posts', 'comments'])
+            ->find($category)
+            ->first();
+
+        $postIds = $repoCategory->posts->pluck('pivot.post_id')->toArray();
+        $posts   = app(PostRepository::class)->findWhereIn('id', $postIds, ['id', 'name']);
+
+        return view('categories.show')->with([
+            'category' => $repoCategory,
+            'posts'    => $posts,
+        ]);
     }
 
     /**
