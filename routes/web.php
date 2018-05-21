@@ -26,3 +26,6 @@ Route::resource('categories', 'CategoryController');
 
 Route::post('/comments', 'CommentController@store')
     ->name('comments.store');
+
+Route::get('/sessions', 'UserSessionController@index')
+    ->name('sessions.index');
