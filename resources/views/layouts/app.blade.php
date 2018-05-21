@@ -49,6 +49,12 @@
                             {{ __('categories.text.categories') }}
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link {{ Route::currentRouteName() === 'sessions.index' ? 'active' : '' }}"
+                           href="{{ route('sessions.index') }}">
+                            {{ __('Unique visitors') }}
+                        </a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->
