@@ -57,7 +57,7 @@
                 <!-- Submit button -->
 
                 <div class="form-group">
-                    <div class="col-md-4 pull-right">
+                    <div class="pull-right">
                         <input type="submit" id="submit" class="btn btn-primary"
                                value="{{ __('categories.pages.edit.buttons.update') }}"/>
                     </div>

@@ -26,7 +26,6 @@ $.ajaxSetup({
     }
 })
 
-
 function handleValidationErrors(response) {
     $('.text-danger').removeClass('text-danger');
     $('.is-invalid').removeClass('is-invalid');
@@ -48,7 +47,31 @@ function handleValidationErrors(response) {
         input.addClass('is-invalid');
         input.parents('div.form-group').find('label').addClass('text-danger');
 
-        var error_span = '<span class="has-error text-danger">' + message +'</span>';
+        var error_span = '<span class="has-error text-danger">' + message + '</span>';
         input.parent().append(error_span);
     }
+}
+
+var restful = {
+    init: function (elem) {
+        elem.on('click', function (e) {
+            self = $(this);
+            e.preventDefault();
+
+            if (confirm('Are you sure?')) {
+                $.ajax({
+                    url: self.attr('href'),
+                    method: 'DELETE',
+                    success: function (data) {
+                        
+                    },
+                    error: function (data) {
+                        alert("Error while deleting.");
+                        console.log(data);
+                    }
+                });
+            }
+            ;
+        })
+    },
 }

@@ -59,7 +59,8 @@ class CategoryController extends Controller
 
         $category = $this->categoryRepository->create($request->all());
 
-        return redirect()->route('categories.show', $category)->withMessage('Ok');
+        return redirect()->route('categories.show', $category)
+            ->withMessage(trans('messages.category_created'));
     }
 
     /**
@@ -71,8 +72,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $repoCategory = $this->categoryRepository->with(['posts', 'comments'])
-            ->find($category->getKey())
-            ->first();
+            ->find($category->getKey());
 
         $postIds = $repoCategory->posts->pluck('pivot.post_id')->toArray();
         $posts   = app(PostRepository::class)->findWhereIn('id', $postIds, ['id', 'name']);
@@ -111,7 +111,8 @@ class CategoryController extends Controller
 
         $updatedCategory = $this->categoryRepository->update($request->all(), $category->getKey());
 
-        return redirect()->route('categories.show', $updatedCategory)->withMessage('Ok');
+        return redirect()->route('categories.show', $updatedCategory)
+            ->withMessage(trans('messages.category_updated'));
     }
 
     /**
@@ -124,5 +125,10 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $this->authorize('delete', $category);
+
+        $category->delete();
+
+        return redirect()->route('categories.index')
+            ->withMessage(trans('messages.category_deleted'));
     }
 }

@@ -11,7 +11,7 @@
                      alt=""
                      class="pull-left img-responsive img-thumbnail margin10">
             </div>
-            <article>
+            <article class="text-justify">
                 {{ $post->getContent() }}
             </article>
         </div>
@@ -22,14 +22,18 @@
                     {{ __('posts.pages.show.buttons.edit') }}
                 </a>
             @endcan
-            @can('update', $post)
-                <a href="{{ route('posts.destroy', $post) }}" class="btn btn-danger">
+            @can('delete', $post)
+                <a href="{{ route('posts.destroy', $post) }}"
+                   data-method="DELETE"
+                   data-token="{{csrf_token()}}"
+                   class="btn btn-danger">
                     {{ __('posts.pages.show.buttons.destroy') }}
                 </a>
             @endcan
         </div>
+        <br/>
         <div class="row">
-            <p>
+            <p class="text-muted">
                 {{ __('categories.text.categories') . ': '}}
             </p>
             <div class="form-group">
@@ -82,6 +86,7 @@
 @section('scripts')
     @parent
 
+    <script src="{{ mix('js/laravel.js') }}" type="text/javascript"></script>
     <script src="{{ mix('js/comment.js') }}" type="text/javascript"></script>
 
 @endsection
