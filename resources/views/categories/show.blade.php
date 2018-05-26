@@ -24,13 +24,14 @@
                 </div>
             </div>
             <div class="col-md-4 pull-right">
+                <br />
                 <div class="btn-group float-left text-right pull-right">
                     @can('update', $category)
                         <a href="{{ route('categories.edit', $category) }}" class="btn btn-dark">
                             {{ __('categories.pages.show.buttons.edit') }}
                         </a>
                     @endcan
-                    @can('update', $category)
+                    @can('delete', $category)
                         <a href="{{ route('categories.destroy', $category) }}" class="btn btn-danger">
                             {{ __('categories.pages.show.buttons.destroy') }}
                         </a>
@@ -73,27 +74,30 @@
                         </div>
                         @foreach($category->comments as $comment)
                             <div class="row">
-                                <div class="col-md-2">
+                                <div class="col-sm-2">
                                     <div class="thumbnail">
-                                        <img class="img-responsive user-photo w-50"
+                                        <img class="img-responsive user-photo" width="100px"
                                              src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
                                     </div>
                                 </div>
 
-                                <div class="col-md-9">
+                                <div class="col-sm-8">
                                     <div class="panel panel-default">
                                         <div class="panel-heading">
                                             <strong>
                                                 {{ $comment->getAuthor() }}
                                             </strong>
-                                            <span class="text-muted">commented 5 days ago</span>
+                                            <span class="text-muted">commented
+                                                {{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}
+                                </span>
                                         </div>
-                                        <div class="panel-body">
+                                        <div class="panel-body text-justify">
                                             {{ $comment->getContent() }}
                                         </div>
                                     </div>
                                 </div>
                             </div>
+                            <br/>
                         @endforeach
                     </div>
                 </div>

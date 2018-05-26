@@ -71,7 +71,7 @@ class CategoryController extends Controller
     public function show(Category $category)
     {
         $repoCategory = $this->categoryRepository->with(['posts', 'comments'])
-            ->find($category)
+            ->find($category->getKey())
             ->first();
 
         $postIds = $repoCategory->posts->pluck('pivot.post_id')->toArray();

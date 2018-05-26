@@ -48,6 +48,35 @@
             'commentableId' => $post->getKey(),
             ])
         </div>
+        <div class="comments col-md-8 offset-md-2">
+            @foreach($post->comments as $comment)
+                <div class="row">
+                    <div class="col-sm-2">
+                        <div class="thumbnail">
+                            <img class="img-responsive user-photo" width="100px"
+                                 src="https://ssl.gstatic.com/accounts/ui/avatar_2x.png">
+                        </div>
+                    </div>
+
+                    <div class="col-sm-10">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <strong>
+                                    {{ $comment->getAuthor() }}
+                                </strong>
+                                <span class="text-muted">commented
+                                    {{ \Carbon\Carbon::parse($comment->created_at)->diffForHumans() }}
+                                </span>
+                            </div>
+                            <div class="panel-body text-justify">
+                                {{ $comment->getContent() }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            @endforeach
+        </div>
     </div>
 @endsection
 @section('scripts')
