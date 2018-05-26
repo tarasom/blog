@@ -114,3 +114,9 @@
     </div>
     </div>
 @endsection
+@section('scripts')
+    @parent
+
+    <script src="{{ mix('js/comment.js') }}" type="text/javascript"></script>
+
+@endsection
