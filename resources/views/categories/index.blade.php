@@ -2,12 +2,14 @@
 
 @section('content')
     <div class="container">
+        @can('create', \App\Entities\Category::class)
         <div role="button" class="add-resource"
              tabindex="0">
             <a href="{{ route('categories.create') }}" class="add-resource-plus">
                 +
             </a>
         </div>
+        @endcan
         <ul class="list-group">
             @foreach ($categories as $category)
                 <li class="list-group-item d-flex justify-content-between align-items-center">
