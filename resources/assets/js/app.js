@@ -28,14 +28,27 @@ $.ajaxSetup({
 
 
 function handleValidationErrors(response) {
-    $('.has-error').removeClass('has-error');
+    $('.text-danger').removeClass('text-danger');
+    $('.is-invalid').removeClass('is-invalid');
+
+    $('span.has-error').remove();
 
     for (var key in response.responseJSON.errors) {
+        var message = response.responseJSON.errors[key];
+
         var keyParts = key.split('.');
         var normalizedKey = keyParts.shift() + keyParts.map(function (item) {
             return '[' + item + ']';
         }).join('');
 
         $('*[name="' + normalizedKey + '"]').parents('div.form-group').addClass('has-error');
+
+        var input = $('*[name="' + normalizedKey + '"]');
+
+        input.addClass('is-invalid');
+        input.parents('div.form-group').find('label').addClass('text-danger');
+
+        var error_span = '<span class="has-error text-danger">' + message +'</span>';
+        input.parent().append(error_span);
     }
 }
