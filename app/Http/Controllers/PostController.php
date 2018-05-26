@@ -47,9 +47,15 @@ class PostController extends Controller
         $posts = $this->postRepository->scopeQuery(function (Builder $query) {
             return $query->latest();
         })->with('categories')
+            ->withCount('comments')
             ->paginate();
 
-        return view('posts.index')->withPosts($posts);
+        $categories = $this->categoryRepository->withCount('posts')->all();
+
+        return view('posts.index')->with([
+            'posts'      => $posts,
+            'categories' => $categories,
+        ]);
     }
 
     /**
@@ -88,7 +94,8 @@ class PostController extends Controller
 
         $post = $this->postRepository->create($attributes);
 
-        return redirect()->route('posts.show', $post)->withMessage('Ok');
+        return redirect()->route('posts.show', $post)
+            ->withMessage(trans('messages.post_created'));
     }
 
     /**
@@ -153,18 +160,26 @@ class PostController extends Controller
 
         $updatedPost->categories()->sync($categories);
 
-        return redirect()->route('posts.show', $updatedPost)->withMessage('Ok');
+        return redirect()->route('posts.show', $updatedPost)
+            ->withMessage(trans('messages.post_updated'));;
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param Post $post
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     *
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function destroy(Post $post)
     {
         $this->authorize('delete', $post);
 
+        $post->delete();
+
+        return redirect()->route('posts.index')
+            ->withMessage(trans('messages.post_deleted'));
     }
 }

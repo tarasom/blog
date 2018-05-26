@@ -79,7 +79,7 @@
                 </h3>
                 <div class="row">
                     @foreach($categories as $categoryId => $categoryName)
-                        <div class="form-check float-left">
+                        <div class="form-check col-md-6">
                             <label>
                                 <input type="checkbox" name="categories[{{$categoryId}}]"
                                         {{ $post->categories->contains('id', $categoryId) ? 'checked' : '' }}>
@@ -94,7 +94,7 @@
                 <!-- Submit button -->
 
                 <div class="form-group">
-                    <div class="col-md-4 pull-right">
+                    <div class="pull-right">
                         <input type="submit" id="submit" class="btn btn-primary"
                                value="{{ __('posts.pages.edit.buttons.update') }}"/>
                     </div>
