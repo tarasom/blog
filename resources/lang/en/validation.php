@@ -125,8 +125,8 @@ return [
     */
 
     'custom' => [
-        'attribute-name' => [
-            'rule-name' => 'custom-message',
+        'author' => [
+            'regex' => 'The :attribute format is invalid. Must be two words with the    first uppercase letters',
         ],
     ],
 

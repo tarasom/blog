@@ -27,7 +27,13 @@ class CommentRequest extends FormRequest
         $relationKeys = array_keys(Relation::$morphMap);
 
         return [
-            'author'           => 'required|string|min:3|max:255',
+            'author'           => [
+                'required',
+                'string',
+                'min:3',
+                'max:255',
+                'regex:/^\p{Lu}\p{Ll}+\s+\p{Lu}\p{Ll}+$/u'
+            ],
             'content'          => 'required|string',
             'commentable_type' => 'required|string|in:' . implode(',', $relationKeys),
             'commentable_id'   => 'required|string|' . $this->getExistsRule(),
