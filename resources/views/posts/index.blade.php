@@ -2,12 +2,14 @@
 
 @section('content')
     <div class="container">
+        @can('create', \App\Entities\Post::class)
         <div role="button" class="add-resource"
              tabindex="0">
             <a href="{{ route('posts.create') }}" class="add-resource-plus">
                 +
             </a>
         </div>
+        @endcan
         <div class="row m-auto">
             {{ $posts->links() }}
         </div>
