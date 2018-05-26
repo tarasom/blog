@@ -99,7 +99,11 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view('posts.show')->withPost($post);
+        $repoPost = $this->postRepository->with(['categories', 'comments'])
+            ->find($post->getKey())
+            ->first();
+
+        return view('posts.show')->withPost($repoPost);
     }
 
     /**
