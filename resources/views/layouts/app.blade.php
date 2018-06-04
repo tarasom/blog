@@ -98,5 +98,6 @@
     </main>
 </div>
 @yield('scripts')
+@include('partials.user_sessions')
 </body>
 </html>
