@@ -10,6 +10,7 @@ use App\Services\Contracts\PostImageService as PostImageServiceInterface;
 use App\Services\PostImageService;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Database\Eloquent\Relations\Relation;
+use Illuminate\Support\Facades\DB;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -27,6 +28,13 @@ class AppServiceProvider extends ServiceProvider
 
         Post::observe(PostObserver::class);
         Category::observe(CategoryObserver::class);
+
+        $userSessions = \DB::table('user_sessions')
+            ->select('browser_family', \DB::raw('count(*) as total'))
+            ->groupBy('browser_family')
+            ->get();
+
+        view()->share('sessions', $userSessions);
     }
 
     /**
